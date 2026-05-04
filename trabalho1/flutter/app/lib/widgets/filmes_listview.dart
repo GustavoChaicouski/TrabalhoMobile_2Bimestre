@@ -10,7 +10,7 @@ class FilmesListView extends StatelessWidget {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Você selecionou: $titulo'),
-        backgroundColor: Colors.black87, 
+        backgroundColor: Colors.black87,
         duration: const Duration(seconds: 2),
         action: SnackBarAction(
           label: 'OK',
@@ -23,17 +23,20 @@ class FilmesListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
+    return ListView.builder(
       padding: const EdgeInsets.fromLTRB(16, 16, 16, 24),
-      children: <Widget>[
-        for (final FilmeItem filme in filmes)
-          Center(
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 16),
-              // 2. USAMOS O INKWELL PARA DETECTAR O TOQUE
+      itemCount: filmes.length,
+      itemBuilder: (context, index) {
+        final filme = filmes[index];
+
+        return Center(
+          child: Padding(
+            padding: const EdgeInsets.only(bottom: 16),
+            child: Material(
+              color: Colors.transparent,
               child: InkWell(
                 onTap: () => _mostrarAviso(context, filme.titulo),
-                borderRadius: BorderRadius.circular(12), // Para o efeito de clique respeitar as bordas
+                borderRadius: BorderRadius.circular(12),
                 child: Container(
                   width: 220,
                   clipBehavior: Clip.antiAlias,
@@ -81,7 +84,8 @@ class FilmesListView extends StatelessWidget {
               ),
             ),
           ),
-      ],
+        );
+      },
     );
   }
 }
